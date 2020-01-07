@@ -15,9 +15,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-//import se.maokei.polls.security.JwtAuthenticationEntryPoint;
-//import se.maokei.polls.security.JwtAuthenticationFilter;
-//import se.maokei.polls.services.CustomUserDetailsService;
+import se.maokei.locpin.security.JwtAuthEntryPoint;
+import se.maokei.locpin.security.JwtAuthFilter;
+import se.maokei.locpin.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -31,11 +31,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     CustomUserDetailsService customUserDetailsService;
 
     @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private JwtAuthEntryPoint unauthorizedHandler;
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter() {
-        return new JwtAuthenticationFilter();
+    public JwtAuthFilter jwtAuthenticationFilter() {
+        return new JwtAuthFilter();
     }
 
     @Override
@@ -59,6 +59,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .headers().frameOptions().sameOrigin() //h2-console
+                .and()
                 .cors()
                 .and()
                 .csrf()
@@ -66,11 +68,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
                 .and()
+                .csrf().ignoringAntMatchers("/h2-console/**") //h2-console
+                .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
                 .antMatchers("/",
+                        "/h2-console/**",
                         "/favicon.ico",
                         "/**/*.png",
                         "/**/*.gif",
@@ -84,13 +89,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/api/se.maokei.polls/**", "/api/users/**")
+                .antMatchers(HttpMethod.GET, "/api/pins/**", "/api/comments/**", "/api/users/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated();
 
         // Add our custom JWT security filter
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
     }
 }
