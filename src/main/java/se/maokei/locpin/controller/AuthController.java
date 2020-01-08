@@ -1,5 +1,7 @@
 package se.maokei.locpin.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,7 @@ import java.util.Collections;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -67,6 +70,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
         if(userRepository.existsByUsername(signUpRequest.getUsername())) {
+            logger.info("Username: " + signUpRequest.getUsername() + " is already in use!");
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
                     HttpStatus.BAD_REQUEST);
         }
@@ -84,7 +88,7 @@ public class AuthController {
 
         Role userRoles = roleRepository.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new ApplicationException("User Role not set."));
-        System.out.println(userRoles);
+
         user.setRoles(Collections.singleton(userRoles));
 
         User result = userRepository.save(user);
