@@ -21,8 +21,9 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     UserRepository userRepo;
 
-    public DataInitializer(RoleRepository roleRepo) {
+    public DataInitializer(RoleRepository roleRepo, UserRepository userRepo) {
         this.roleRepo = roleRepo;
+        this.userRepo = userRepo;
     }
 
     @Override
@@ -59,9 +60,20 @@ public class DataInitializer implements CommandLineRunner {
         testUser.setEmail("admin@gmail.com");
         //test12345
         testUser.setPassword("$2a$10$npEFJsg/gzUj0129jz09v.l332yoEysO7JvXnDFg5WbC3DrRT/CUK");
-        Role userRoles = roleRepo.findByName(RoleName.ROLE_USER)
+        Role userRoles = roleRepo.findByName(RoleName.ROLE_ADMIN)
                 .orElseThrow(() -> new ApplicationException("User Roles not set in time"));
         testUser.setRoles(Collections.singleton(userRoles));
+        userRepo.save(testUser);
+
+        User testUser2 = new User();
+        testUser2.setName("Bosse");
+        testUser2.setUsername("blackcat");
+        testUser2.setEmail("bosse@gmail.com");
+        //test12345
+        testUser2.setPassword("$2a$10$npEFJsg/gzUj0129jz09v.l332yoEysO7JvXnDFg5WbC3DrRT/CUK");
+        Role userRoles2 = roleRepo.findByName(RoleName.ROLE_USER)
+                .orElseThrow(() -> new ApplicationException("User Roles not set in time"));
+        testUser.setRoles(Collections.singleton(userRoles2));
         userRepo.save(testUser);
 
     }

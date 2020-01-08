@@ -16,8 +16,6 @@ import se.maokei.locpin.security.CurrentUser;
 import se.maokei.locpin.security.UserPrincipal;
 
 /**
- In UserController, We’ll be writing APIs to -
-
  Get the currently logged in user.
  Check if a username is available for registration.
  Check if an email is available for registration.
