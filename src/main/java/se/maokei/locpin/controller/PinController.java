@@ -5,12 +5,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import se.maokei.locpin.repository.CommentRepository;
+import se.maokei.locpin.repository.PinRepository;
 
 @RestController
 @RequestMapping("/api")
-public class CommentController {
+public class PinController {
     @Autowired
-    private CommentRepository commentRepository;
-    private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
+    private PinRepository pinRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(PinController.class);
 }

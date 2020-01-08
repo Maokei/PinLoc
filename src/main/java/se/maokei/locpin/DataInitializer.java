@@ -75,6 +75,9 @@ public class DataInitializer implements CommandLineRunner {
                 .orElseThrow(() -> new ApplicationException("User Roles not set in time"));
         testUser.setRoles(Collections.singleton(userRoles2));
         userRepo.save(testUser);
+    }
+
+    private void initiateTestPin() {
 
     }
 }
