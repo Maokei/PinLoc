@@ -1,6 +1,8 @@
 package se.maokei.locpin.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
@@ -51,9 +53,12 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     public User() {
-
     }
 
     public User(String name, String username, String email, String password) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 }

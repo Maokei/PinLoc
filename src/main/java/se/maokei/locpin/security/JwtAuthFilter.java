@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Finally, Let’s write the JWTAuthenticationFilter to get the JWT token from the request,
+ * JWTAuthenticationFilter to get the JWT token from the request,
  * validate it, load the user associated with the token, and pass it to Spring Security
  * */
 

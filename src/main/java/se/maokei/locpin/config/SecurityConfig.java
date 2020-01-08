@@ -24,7 +24,7 @@ import se.maokei.locpin.service.CustomUserDetailsService;
 @EnableGlobalMethodSecurity( //Allows for @Secured("ROLE") etc on methods directly
         securedEnabled = true,
         jsr250Enabled = true, //Enables @RolesAllowed("ROLE")
-        prePostEnabled = true //More complex expression based acccess control syntax PreAllowed PostAuthorize
+        prePostEnabled = true //More complex expression based access control syntax PreAllowed PostAuthorize
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
@@ -59,16 +59,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .headers().frameOptions().sameOrigin() //h2-console
+                .headers().frameOptions().sameOrigin()
                 .and()
                 .cors()
+                .and()
+                .csrf().ignoringAntMatchers("/h2-console/**")
                 .and()
                 .csrf()
                 .disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
-                .and()
-                .csrf().ignoringAntMatchers("/h2-console/**") //h2-console
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -85,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js")
                 .permitAll()
-                .antMatchers("/api/auth/**")
+                .antMatchers(HttpMethod.POST, "/api/auth/**")
                 .permitAll()
                 .antMatchers("/api/user/checkUsernameAvailability", "/api/user/checkEmailAvailability")
                 .permitAll()
