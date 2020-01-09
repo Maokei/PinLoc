@@ -10,7 +10,7 @@ import se.maokei.locpin.model.User;
 import se.maokei.locpin.payload.UserIdentityAvailability;
 import se.maokei.locpin.payload.UserProfile;
 import se.maokei.locpin.payload.UserSummary;
-import se.maokei.locpin.repository.PinRepository;
+import se.maokei.locpin.repository.PostRepository;
 import se.maokei.locpin.repository.UserRepository;
 import se.maokei.locpin.security.CurrentUser;
 import se.maokei.locpin.security.UserPrincipal;
@@ -32,7 +32,7 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
-    private PinRepository pinRepository;
+    private PostRepository postRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 

@@ -1,6 +1,5 @@
 package se.maokei.locpin.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
@@ -58,10 +57,10 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private Set<Comment> comments = new HashSet<>();
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_pin",
+    @JoinTable(name = "user_post",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "pin_id"))
-    private Set<Pin> pins = new HashSet<>();
+            inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private Set<Post> posts = new HashSet<>();
 
     public User(String name, String username, String email, String password) {
         this.name = name;

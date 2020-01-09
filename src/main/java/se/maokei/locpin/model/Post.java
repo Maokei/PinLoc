@@ -13,10 +13,12 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-public class Pin {
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
+    private String image;
     @NotNull
     private float longitude;
     @NotNull
@@ -25,8 +27,8 @@ public class Pin {
     @Size(max = 500)
     private String description;
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "pin_comment",
-            joinColumns = @JoinColumn(name = "pin_id"),
+    @JoinTable(name = "post_comment",
+            joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private Set<Comment> comments = new HashSet<>();
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
