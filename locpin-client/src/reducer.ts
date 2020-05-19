@@ -1,7 +1,4 @@
-import React from 'react'
 import { InitialStateType } from "./context"
-
-//export type Action = "test";
 
 export enum ActionType {
 	USER_LOGIN,
@@ -26,8 +23,6 @@ export const appReducer = (state: InitialStateType, action: Action) => {
 				...state,
 				lang: "out"
 			}
-		//case "LOGIN_USER":
-		//	return state
 		default:
 		return state;
 	}
