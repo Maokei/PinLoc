@@ -2,13 +2,16 @@ import { createContext } from 'react'
 
 export type InitialStateType = {
 	lang: string;
+	authenticated: boolean;
 }
 
 const initialState = {
-	lang: 'eng'
+	lang: 'eng',
+	authenticated: false
 };
 
-const appContext = createContext<InitialStateType>(initialState);
+const AppContext = createContext<InitialStateType>(initialState);
+
 export {
-	appContext
+	AppContext
 };

@@ -5,13 +5,12 @@ export enum ActionType {
 	USER_LOGOUT
 }
  
-
 interface Action {
 	type: ActionType;
 	payload: any;
 }
 
-export const appReducer = (state: InitialStateType, action: Action) => {
+export const AppReducer = (state: InitialStateType, action: Action) => {
 	switch(action.type) {
 		case ActionType.USER_LOGIN:
 			return {

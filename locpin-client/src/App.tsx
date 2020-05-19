@@ -1,13 +1,11 @@
 import React, { useContext, useReducer } from 'react';
 import Button from '@material-ui/core/Button'; 
-import { appContext } from "./context";
-import { ActionType, appReducer } from "./reducer";
+import { AppContext } from "./context";
+import { ActionType, AppReducer } from "./reducer";
 
 function App() {
-	const initialState = useContext(appContext)
-	const [ state, dispatch ] = useReducer(appReducer, initialState)
-	//dispatch("test")
-	// <Context.Provider value={{ state, dispatch }}>
+	const initialState = useContext(AppContext)
+	const [ state, dispatch ] = useReducer(AppReducer, initialState)
   return (
     <div>
     <Button variant="contained" color="primary" onClick={() => dispatch({type: ActionType.USER_LOGIN, payload: "swe"})}>
