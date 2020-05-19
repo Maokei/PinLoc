@@ -1,7 +1,7 @@
 import React, { useContext, useReducer } from 'react';
 import Button from '@material-ui/core/Button'; 
 import { appContext } from "./context";
-import { appReducer } from "./reducer";
+import { ActionType, appReducer } from "./reducer";
 
 function App() {
 	const initialState = useContext(appContext)
@@ -9,10 +9,14 @@ function App() {
 	//dispatch("test")
 	// <Context.Provider value={{ state, dispatch }}>
   return (
-    <Button variant="contained" color="primary" onClick={() => dispatch("test")}>
+    <div>
+    <Button variant="contained" color="primary" onClick={() => dispatch({type: ActionType.USER_LOGIN, payload: "swe"})}>
       Hello World { state.lang }
     </Button>
-
+    <Button variant="contained" color="primary" onClick={() => dispatch({type: ActionType.USER_LOGOUT, payload: "eng"})}>
+      Reset
+    </Button>
+</div>
   );
 }
 
