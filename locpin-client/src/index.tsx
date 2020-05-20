@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useContext, useReducer } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { AppContext } from "./context";
+import { AppReducer } from "./reducer";
+
+const Root = () => {
+  const initialState = useContext(AppContext)
+  const [ state ] = useReducer(AppReducer, initialState)
+  
+  return (
+    <AppContext.Provider value={{...state}} >
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </AppContext.Provider>
+  );
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Root/>,
   document.getElementById('root')
 );
 
