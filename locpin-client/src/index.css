@@ -32,7 +32,46 @@ h2 {
   margin: auto;
 }
 
+.logo-border {
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: rotate(45deg);
+}
+
+.logo-border svg {
+  fill: var(--clr-white);
+  transform: translate(.1em, .2em) rotate(-45deg);
+  width: 1.5em;
+  height: 1.5em;
+}
+
+form svg {
+  fill: var(--clr-gray) !important;
+}
+
 .btn {
   width: 100% ;
   border: 1px solid var(--clr-black) !important;
+}
+
+@media (min-width: 900px) {
+  body {
+    display: grid;
+    justify-items: center;
+  }
+
+  .logo-border {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+  
+  .logo-border svg {
+    transform: translate(.3em, .4em) rotate(-45deg);
+    width: 2.5em;
+    height: 2.5em;
+  }
+
+  .input-field {
+    width: calc(50vw - 2em);
+  }
 }
