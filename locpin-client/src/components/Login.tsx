@@ -1,4 +1,5 @@
 import React from 'react'
+import Grid from '@material-ui/core/Grid';
 import { Container } from '@material-ui/core'
 import { PinLogo } from './PinLogo'
 import { LoginForm } from './LoginForm';
@@ -12,14 +13,16 @@ export const Login = () => {
             <PinLogo />
             <h2 className='center'>Log In</h2>
             <LoginForm />
-            <Link href="#">
-                Fogot password?
-            </Link>
-            <p>Don't have an account? 
+            <Grid container className='link-center'>
                 <Link href="#">
-                    Join Now
+                    Fogot password?
                 </Link>
-            </p>
+                <p>Don't have an account? 
+                    <Link href="#">
+                        Join Now
+                    </Link>
+                </p>
+            </Grid>
         </Container>
     )
 }

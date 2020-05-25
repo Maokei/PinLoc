@@ -18,6 +18,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+a {
+  color: var(--clr-black) !important;
+  text-decoration: underline solid var(--clr-yellow) !important;
+}
+
 h2 {
   font-family: var(--font-playfair), serif;
   font-size: 2rem;
@@ -54,6 +59,23 @@ form svg {
   border: 1px solid var(--clr-black) !important;
 }
 
+.btn:hover {
+  background-color: var(--clr-blue-dark) !important;
+  border: 1px solid var(--clr-gray) !important;
+}
+
+.btn:hover span {
+  color: var(--clr-white);
+}
+
+.link-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(1rem);
+}
+
 @media (min-width: 900px) {
   body {
     display: grid;
@@ -73,5 +95,15 @@ form svg {
 
   .input-field {
     width: calc(50vw - 2em);
+  }
+
+  .link-center {
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 1em;
+  }
+
+  .link-center a:hover {
+    color: var(--clr-blue-dark) !important;
   }
 }
