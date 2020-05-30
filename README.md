@@ -1,1 +1,1 @@
-# LocPin
+# LocationPin
