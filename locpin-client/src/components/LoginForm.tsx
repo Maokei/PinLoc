@@ -1,4 +1,7 @@
-import React from 'react'
+import React, { useContext, useReducer } from 'react'
+import { AppContext } from "../context";
+import { ActionType, AppReducer } from "../reducer";
+
 import { TextField } from '@material-ui/core'
 import Grid from '@material-ui/core/Grid';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -6,6 +9,10 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Button from '@material-ui/core/Button';
 
 export const LoginForm = () => {
+    const initialState = useContext(AppContext)
+    // eslint-disable-next-line
+    const [ state, dispatch ] = useReducer(AppReducer, initialState)
+    
     return (
         <form style={{ padding: '0 1em' }} className='center' noValidate autoComplete="off">
             <Grid container spacing={1} alignItems="flex-end">
@@ -28,7 +35,7 @@ export const LoginForm = () => {
             </Grid>
             {/* <TextField id="outlined-basic" label="Password" variant="outlined" /> */}
             <br />
-            <Button className='btn' variant="outlined">
+            <Button className='btn' variant="outlined" onClick={() => dispatch({type: ActionType.USER_LOGIN, payload: "swe"})}>
                 Submit
             </Button>
         </form>
