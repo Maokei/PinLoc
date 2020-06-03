@@ -47,6 +47,7 @@ public class AuthControllerTest {
         testUser.setPassword("1337#t");
         //Json payload
         String payload = om.writeValueAsString(testUser);
+        System.out.println(payload);
         //Perform test
         MvcResult result = mockMvc.perform(
                 MockMvcRequestBuilders.post(url)
