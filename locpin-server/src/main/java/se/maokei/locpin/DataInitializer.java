@@ -13,6 +13,7 @@ import se.maokei.locpin.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -46,14 +47,20 @@ public class DataInitializer implements CommandLineRunner {
     private void initiateRoles() {
         System.out.println("Inserting roles");
         List<Role> roles = new ArrayList();
-        roles.add(new Role(RoleName.ROLE_ADMIN));
-        roles.add(new Role(RoleName.ROLE_USER));
-        roleRepo.deleteAll();
+        Optional<Role> rop = roleRepo.findByName(RoleName.ROLE_ADMIN);
+        if(rop.isEmpty()) {
+            roles.add(new Role(RoleName.ROLE_ADMIN));
+        }
+        rop = roleRepo.findByName(RoleName.ROLE_USER);
+        if(rop.isEmpty()) {
+            roles.add(new Role(RoleName.ROLE_USER));
+        }
         roleRepo.saveAll(roles);
-        System.out.println("Roles inserted");
+        System.out.println("Default Roles inserted");
     }
 
     private void initiateTestUser() {
+        Optional<User> uOpt;
         User testUser = new User();
         testUser.setName("Administrator");
         testUser.setUsername("admin");
@@ -63,7 +70,10 @@ public class DataInitializer implements CommandLineRunner {
         Role userRoles = roleRepo.findByName(RoleName.ROLE_ADMIN)
                 .orElseThrow(() -> new ApplicationException("User Roles not set in time"));
         testUser.setRoles(Collections.singleton(userRoles));
-        userRepo.save(testUser);
+        uOpt = userRepo.findByUsername(testUser.getUsername());
+        if(uOpt.isEmpty()) {
+            userRepo.save(testUser);
+        }
 
         User testUser2 = new User();
         testUser2.setName("Bosse");
@@ -74,11 +84,14 @@ public class DataInitializer implements CommandLineRunner {
         Role userRoles2 = roleRepo.findByName(RoleName.ROLE_USER)
                 .orElseThrow(() -> new ApplicationException("User Roles not set in time"));
         testUser.setRoles(Collections.singleton(userRoles2));
-        userRepo.save(testUser);
-        System.out.println("Inserted test users");
+        uOpt = userRepo.findByUsername(testUser2.getUsername());
+        if(uOpt.isEmpty()) {
+            userRepo.save(testUser2);
+        }
+        System.out.println("Default Inserted test users");
     }
 
     private void initiateTestPost() {
-
+        //TODO default test post
     }
 }

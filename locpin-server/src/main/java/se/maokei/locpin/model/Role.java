@@ -1,12 +1,14 @@
 package se.maokei.locpin.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,10 +18,6 @@ public class Role {
     @NaturalId
     @Column(length = 60)
     private RoleName name;
-
-    public Role() {
-
-    }
 
     public Role(RoleName name) {
         this.name = name;
