@@ -10,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.Assert;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import se.maokei.locpin.model.User;
@@ -30,15 +31,6 @@ public class AuthControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    //@Before
-    /*public void setup() {
-        mockMvc = MockMvcBuilders
-                .webAppContextSetup(context)
-                .apply(SecurityMockMvcConfigurers.springSecurity())
-                .alwaysDo(print())
-                .build();
-    }*/
-
     @Test
     public void registerUserTest() throws Exception {
         String url = "/api/auth/signup";
@@ -49,7 +41,6 @@ public class AuthControllerTest {
         testUser.setPassword("1337#t");
         //Json payload
         String payload = om.writeValueAsString(testUser);
-        System.out.println(payload);
         //Perform test
         MvcResult result = mockMvc.perform(
                 MockMvcRequestBuilders.post(url)
@@ -57,5 +48,11 @@ public class AuthControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .content(payload)
         ).andExpect(status().isCreated()).andReturn();
+        Assert.isTrue(
+                result.getResponse()
+                        .getContentAsString()
+                        .contains("success\":true,\"message\":\"User registered successfully"),
+                "Bad response from registration"
+                );
     }
 }
