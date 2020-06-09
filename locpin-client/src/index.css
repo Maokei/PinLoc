@@ -55,7 +55,7 @@ form svg {
 }
 
 .btn {
-  width: 100% ;
+  width: 100%;
   border: 1px solid var(--clr-black) !important;
 }
 
@@ -86,7 +86,7 @@ form svg {
     width: 4.5rem;
     height: 4.5rem;
   }
-  
+
   .logo-border svg {
     transform: translate(.3em, .4em) rotate(-45deg);
     width: 2.5em;
@@ -99,7 +99,7 @@ form svg {
 
   .link-center {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0 1em;
   }
 
