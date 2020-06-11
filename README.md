@@ -11,5 +11,5 @@ REST Documentation| [Swagger UI / Springfox](https://github.com/springfox/spring
 REST Spec         | [Open API Standard](https://www.openapis.org/) 
 In Memory DB      | H2 
 Persistence       | JPA (Using Spring Data)
-Client Build Tools| [angular-cli](https://github.com/angular/angular-cli), Webpack, yarn
+Client Build Tools| Webpack, yarn
 Server Build Tools| Maven
