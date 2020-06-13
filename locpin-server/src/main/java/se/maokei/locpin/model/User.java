@@ -14,14 +14,14 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "users", uniqueConstraints = {
+/*@Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = {
                 "username"
         }),
         @UniqueConstraint(columnNames = {
                 "email"
         })
-})
+})*/
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,7 +56,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "comment_id"))
     private Set<Comment> comments = new HashSet<>();
-    @ManyToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_post",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "post_id"))
