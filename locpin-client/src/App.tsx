@@ -2,6 +2,7 @@ import React, { useContext, useReducer } from 'react';
 import Button from '@material-ui/core/Button'; 
 import { AppContext } from "./context";
 import { ActionType, AppReducer } from "./reducer";
+import Map from "./components/Map";
 
 function App() {
 	const initialState = useContext(AppContext)
@@ -14,6 +15,7 @@ function App() {
     <Button variant="contained" color="primary" onClick={() => dispatch({type: ActionType.USER_LOGOUT, payload: "eng"})}>
       Reset
     </Button>
+    <Map/>
 </div>
   );
 }
