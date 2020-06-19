@@ -8,6 +8,7 @@ function App() {
     return (
         <div>
             <Router>
+                <RouterPage path="/" pageComponent={<Login />} />
                 <RouterPage path="/login" pageComponent={<Login />} />
                 <RouterPage path="/signup" pageComponent={<Signup />} />
             </Router>
