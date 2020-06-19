@@ -8,7 +8,7 @@ function App() {
 	const initialState = useContext(AppContext)
 	const [ state, dispatch ] = useReducer(AppReducer, initialState)
   return (
-    <div>
+    <div className="app">
     <Button variant="contained" color="primary" onClick={() => dispatch({type: ActionType.USER_LOGIN, payload: "swe"})}>
       Hello World { state.lang }
     </Button>
