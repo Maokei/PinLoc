@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@material-ui/core/Grid";
 import { Container } from "@material-ui/core";
 import { PinLogo } from "./PinLogo";
-import { SignupForm } from "./SignupForm";
+import SignupForm from "./SignupForm";
 import Link from "@material-ui/core/Link";
 
 export const Signup = () => {

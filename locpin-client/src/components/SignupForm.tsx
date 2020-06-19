@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
@@ -8,29 +9,14 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import Button from "@material-ui/core/Button";
 
-export const SignupForm = () => {
+const SignupForm = (): JSX.Element => {
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-
     const [helperText, setHelperText] = useState("");
-    const [error, setError] = useState(false);
-
-    const handleChange = (e: any) => {
-        if (
-            // eslint-disable-next-line
-            !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)
-        ) {
-            setError(true);
-        } else {
-            setEmail(e.target.value);
-        }
-        setName(e.target.value);
-        setUsername(e.target.value);
-        setPassword(e.target.value);
-    };
+    let errorArray:string[] = [];
 
     const handleSubmit = async () => {
         const data = {
@@ -39,13 +25,31 @@ export const SignupForm = () => {
             password,
             username,
         };
+
+        const emailRegex = /^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/; 
+        if (emailRegex.test(email) && (email.length > 2) && (41 < email.length)) {
+            errorArray.push("Bad email");
+        }
+        if((name.length > 2) && (41 < name.length)) {
+            errorArray.push("Name needs to between 3 and 40 characters.");
+        }
+        if((username.length > 2) && (16 < username.length)) {
+            errorArray.push("Name needs to between 3 and 15 characters.");
+        }
+        if((password.length > 2) && (101 < password.length)) {
+            errorArray.push("Password needs to between 3 and 100 characters.");
+        }
+        
+        if(errorArray.length > 0) {
+            return;
+        }
+        
         const res: any = await axios.post(
             "http://localhost:8080/api/auth/signup",
             data
         );
-        //handle response
-        console.log(res.data);
-        console.log(res.data.email);
+        errorArray = [];
+        console.log({data});
     };
 
     useEffect(() => {
@@ -72,8 +76,9 @@ export const SignupForm = () => {
                         className="input-field"
                         label="Email"
                         name="email"
-                        error={error}
-                        onChange={handleChange}
+                        type="email"
+                        error={(errorArray.length > 0)}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </Grid>
             </Grid>
@@ -87,8 +92,8 @@ export const SignupForm = () => {
                         id="input-with-icon-grid"
                         className="input-field"
                         label="Name"
-                        error={error}
-                        onChange={handleChange}
+                        error={(errorArray.length > 0)}
+                        onChange={(e) => setName(e.target.value)}
                     />
                 </Grid>
             </Grid>
@@ -102,8 +107,8 @@ export const SignupForm = () => {
                         id="input-with-icon-grid"
                         className="input-field"
                         label="Username"
-                        error={error}
-                        onChange={handleChange}
+                        error={(errorArray.length > 0)}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                 </Grid>
             </Grid>
@@ -117,9 +122,10 @@ export const SignupForm = () => {
                         id="input-with-icon-grid"
                         className="input-field"
                         label="Password"
-                        error={error}
+                        type="password"
+                        error={(errorArray.length > 0)}
                         helperText={helperText}
-                        onChange={handleChange}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </Grid>
             </Grid>
@@ -135,3 +141,5 @@ export const SignupForm = () => {
         </form>
     );
 };
+
+export default SignupForm;
