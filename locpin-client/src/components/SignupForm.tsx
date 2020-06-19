@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useNavigate, navigate } from "@reach/router";
 import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
@@ -8,6 +8,7 @@ import HowToRegIcon from "@material-ui/icons/HowToReg";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import Button from "@material-ui/core/Button";
+import { BASE_URL, SIGNUP_ENDPOINT } from '../constants';
 
 const SignupForm = (): JSX.Element => {
     const [email, setEmail] = useState("");
@@ -45,11 +46,12 @@ const SignupForm = (): JSX.Element => {
         }
         
         const res: any = await axios.post(
-            "http://localhost:8080/api/auth/signup",
+            `${BASE_URL}${SIGNUP_ENDPOINT}`,
             data
         );
         errorArray = [];
         console.log({data});
+        navigate("/login");
     };
 
     useEffect(() => {

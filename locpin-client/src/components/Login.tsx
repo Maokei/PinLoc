@@ -5,7 +5,7 @@ import { PinLogo } from "./PinLogo";
 import { LoginForm } from "./LoginForm";
 import Link from "@material-ui/core/Link";
 
-export const Login = () => {
+const Login = () => {
     // const preventDefault = (event) => event.preventDefault();
 
     return (
@@ -23,3 +23,5 @@ export const Login = () => {
         </Container>
     );
 };
+
+export default Login;

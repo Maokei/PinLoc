@@ -5,7 +5,7 @@ import { PinLogo } from "./PinLogo";
 import SignupForm from "./SignupForm";
 import Link from "@material-ui/core/Link";
 
-export const Signup = () => {
+const Signup = (): JSX.Element => {
     return (
         <Container>
             <PinLogo />
@@ -23,3 +23,5 @@ export const Signup = () => {
         </Container>
     );
 };
+
+export default Signup;
