@@ -69,12 +69,12 @@ public class AuthController {
         if(userRepository.existsByUsername(signUpRequest.getUsername())) {
             logger.info("Username: " + signUpRequest.getUsername() + " is already in use!");
             return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
-                    HttpStatus.OK);
+                    HttpStatus.BAD_REQUEST);
         }
 
         if(userRepository.existsByEmail(signUpRequest.getEmail())) {
             return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
-                    HttpStatus.OK);
+                    HttpStatus.BAD_REQUEST);
         }
 
         // Creating user's account
