@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+// eslint-disable-next-line
 import { useNavigate, navigate } from "@reach/router";
 import { TextField } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -8,7 +9,7 @@ import HowToRegIcon from "@material-ui/icons/HowToReg";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import Button from "@material-ui/core/Button";
-import { BASE_URL, SIGNUP_ENDPOINT } from '../constants';
+import { BASE_URL, SIGNUP_ENDPOINT } from "../constants";
 
 const SignupForm = (): JSX.Element => {
     const [email, setEmail] = useState("");
@@ -17,9 +18,11 @@ const SignupForm = (): JSX.Element => {
     const [password, setPassword] = useState("");
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
     const [helperText, setHelperText] = useState("");
-    let errorArray:string[] = [];
+    const [msg, setMsg] = useState("");
+    let errorArray: string[] = [];
 
     const handleSubmit = async () => {
+        errorArray = [];
         const data = {
             email,
             name,
@@ -27,31 +30,42 @@ const SignupForm = (): JSX.Element => {
             username,
         };
 
-        const emailRegex = /^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/; 
-        if (emailRegex.test(email) && (email.length > 2) && (41 < email.length)) {
+        const emailRegex = /^([A-Za-z0-9_\-.+])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,})$/;
+        if (
+            !emailRegex.test(email) ||
+            !(email.length > 3) ||
+            email.length > 40
+        ) {
             errorArray.push("Bad email");
         }
-        if((name.length > 2) && (41 < name.length)) {
+        if (name.length < 3 || name.length > 41) {
             errorArray.push("Name needs to between 3 and 40 characters.");
         }
-        if((username.length > 2) && (16 < username.length)) {
+        if (username.length < 3 || username.length > 16) {
             errorArray.push("Name needs to between 3 and 15 characters.");
         }
-        if((password.length > 2) && (101 < password.length)) {
+        if (password.length < 3 || password.length > 101) {
             errorArray.push("Password needs to between 3 and 100 characters.");
         }
-        
-        if(errorArray.length > 0) {
+        if (errorArray.length > 0) {
             return;
         }
-        
-        const res: any = await axios.post(
-            `${BASE_URL}${SIGNUP_ENDPOINT}`,
-            data
-        );
+
+        const res: any = await axios
+            .post(`${BASE_URL}${SIGNUP_ENDPOINT}`, data)
+            .catch((error) => {
+                if (error.response) {
+                    setMsg(error.response.data.message);
+                } else {
+                    console.log("Error", error.message);
+                }
+            });
+        console.log(res);
+
         errorArray = [];
-        console.log({data});
-        navigate("/login");
+        if (res.data.success) {
+            navigate("/login");
+        }
     };
 
     useEffect(() => {
@@ -68,18 +82,19 @@ const SignupForm = (): JSX.Element => {
             className="center"
             noValidate
             autoComplete="off">
+            {msg}
             <Grid container spacing={1} alignItems="flex-end">
                 <Grid item>
                     <MailOutlineIcon />
                 </Grid>
                 <Grid item>
                     <TextField
-                        id="input-with-icon-grid"
+                        id="input-with-icon-grid mail-icon"
                         className="input-field"
                         label="Email"
                         name="email"
                         type="email"
-                        error={(errorArray.length > 0)}
+                        error={errorArray.length > 0}
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </Grid>
@@ -91,10 +106,10 @@ const SignupForm = (): JSX.Element => {
                 </Grid>
                 <Grid item>
                     <TextField
-                        id="input-with-icon-grid"
+                        id="input-with-icon-grid name-icon"
                         className="input-field"
                         label="Name"
-                        error={(errorArray.length > 0)}
+                        error={errorArray.length > 0}
                         onChange={(e) => setName(e.target.value)}
                     />
                 </Grid>
@@ -106,10 +121,10 @@ const SignupForm = (): JSX.Element => {
                 </Grid>
                 <Grid item>
                     <TextField
-                        id="input-with-icon-grid"
+                        id="input-with-icon-grid user-icon"
                         className="input-field"
                         label="Username"
-                        error={(errorArray.length > 0)}
+                        error={errorArray.length > 0}
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </Grid>
@@ -121,11 +136,11 @@ const SignupForm = (): JSX.Element => {
                 </Grid>
                 <Grid item>
                     <TextField
-                        id="input-with-icon-grid"
+                        id="input-with-icon-grid passoword-icon"
                         className="input-field"
                         label="Password"
                         type="password"
-                        error={(errorArray.length > 0)}
+                        error={errorArray.length > 0}
                         helperText={helperText}
                         onChange={(e) => setPassword(e.target.value)}
                     />
