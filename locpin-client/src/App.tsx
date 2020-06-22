@@ -6,7 +6,7 @@ import Login from "./components/Login";
 
 function App() {
     return (
-        <div>
+        <div className="app">
             <Router>
                 <RouterPage path="/" pageComponent={<Login />} />
                 <RouterPage path="/login" pageComponent={<Login />} />
@@ -16,7 +16,7 @@ function App() {
     );
 }
 
-export default  App;
+export default App;
 
 const RouterPage = (
     props: { pageComponent: JSX.Element } & RouteComponentProps
