@@ -1,6 +1,7 @@
 import React, { useContext, useReducer } from "react";
 import { AppContext } from "../context";
 import { ActionType, AppReducer } from "../reducer";
+import axios from "axios";
 import { BASE_URL, SIGNIN_ENDPOINT } from "../constants";
 
 import { TextField } from "@material-ui/core";
@@ -14,8 +15,22 @@ export const LoginForm = () => {
     // eslint-disable-next-line
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const url = `${BASE_URL}${SIGNIN_ENDPOINT}`;
+        const data = {};
+        axios.post(url, data).then(res => {
 
+        })
+        .catch(err => {
+            if(err.response) {
+                //400, 500
+            } else if(err.request) {
+                //request did not leave or no response
+            } else {
+                console.error("Unknown error at login");
+            }
+        })
     }
 
     return (
