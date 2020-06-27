@@ -1,3 +1,14 @@
+:root {
+  --font-playfair: 'Playfair Display';
+
+  --clr-black: #000000;
+  --clr-blue-dark: #5690A8;
+  --clr-blue-light: #BDDADC;
+  --clr-gray: #C4C4C4;
+  --clr-yellow: #FAC700;
+  --clr-white: #FFFFFF;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,7 +18,92 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a {
+  color: var(--clr-black) !important;
+  text-decoration: underline solid var(--clr-yellow) !important;
+}
+
+h2 {
+  font-family: var(--font-playfair), serif;
+  font-size: 2rem;
+  line-height: normal;
+  padding: 3rem 0;
+}
+
+.center {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  margin: auto;
+}
+
+.logo-border {
+  width: 2.5rem;
+  height: 2.5rem;
+  transform: rotate(45deg);
+}
+
+.logo-border svg {
+  fill: var(--clr-white);
+  transform: translate(.1em, .2em) rotate(-45deg);
+  width: 1.5em;
+  height: 1.5em;
+}
+
+form svg {
+  fill: var(--clr-gray) !important;
+}
+
+.btn {
+  width: 100%;
+  border: 1px solid var(--clr-black) !important;
+}
+
+.btn:hover {
+  background-color: var(--clr-blue-dark) !important;
+  border: 1px solid var(--clr-gray) !important;
+}
+
+.btn:hover span {
+  color: var(--clr-white);
+}
+
+.link-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(1rem);
+}
+
+@media (min-width: 900px) {
+  body {
+    display: grid;
+    justify-items: center;
+  }
+
+  .logo-border {
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+
+  .logo-border svg {
+    transform: translate(.3em, .4em) rotate(-45deg);
+    width: 2.5em;
+    height: 2.5em;
+  }
+
+  .input-field {
+    width: calc(50vw - 2em);
+  }
+
+  .link-center {
+    flex-direction: row;
+    justify-content: center;
+    padding: 0 1em;
+  }
+
+  .link-center a:hover {
+    color: var(--clr-blue-dark) !important;
+  }
 }
