@@ -44,4 +44,8 @@ describe("SignupForm", () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
+
+    const formWrapper = mount(<SignupForm />);
+    const form = formWrapper.find("form").at(0);
+    // console.log(form.debug());
 });
