@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class DBFile {
     @Id
@@ -27,4 +26,10 @@ public class DBFile {
     @Lob
     @NotNull
     private byte[] data;
+
+    public DBFile(String fileName, String fileExtension, byte[] data) {
+        this.fileName = fileName;
+        this.fileExtension = fileExtension;
+        this.data = data;
+    }
 }
