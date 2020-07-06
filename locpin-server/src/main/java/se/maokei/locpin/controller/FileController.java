@@ -15,5 +15,6 @@ public class FileController {
 
     @PostMapping("/photos/add")
     public void addPhoto(@RequestParam("image") MultipartFile image) throws IOException {
+        //todo
     }
 }
