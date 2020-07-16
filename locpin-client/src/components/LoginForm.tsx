@@ -1,6 +1,5 @@
-import React, { useContext, useReducer } from "react";
-import { AppContext } from "../context";
-import { ActionType, AppReducer } from "../reducer";
+import React, { useState, useEffect } from "react";
+// import { AppReducer } from '../reducer'
 import axios from "axios";
 import { BASE_URL, SIGNIN_ENDPOINT } from "../constants";
 
@@ -11,27 +10,42 @@ import VpnKeyIcon from "@material-ui/icons/VpnKey";
 import Button from "@material-ui/core/Button";
 
 export const LoginForm = () => {
-    const initialState = useContext(AppContext);
-    // eslint-disable-next-line
-    const [state, dispatch] = useReducer(AppReducer, initialState);
+    // const [form, dispatch] = useReducer(AppReducer, [])
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [helperText, setHelperText] = useState("");
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [error, setError] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    useEffect(() => {
+        if (email.trim() && password.trim()) {
+            setIsButtonDisabled(false);
+        } else {
+            setIsButtonDisabled(true);
+        }
+    }, [email, password]);
+
+    const handleSubmit = async () => {
         const url = `${BASE_URL}${SIGNIN_ENDPOINT}`;
-        const data = {};
-        axios.post(url, data).then(res => {
+        const data = { email, password };
 
-        })
-        .catch(err => {
-            if(err.response) {
-                //400, 500
-            } else if(err.request) {
-                //request did not leave or no response
-            } else {
-                console.error("Unknown error at login");
-            }
-        })
-    }
+        const res: any = await axios.post(url, data);
+
+        if (email === data.email && password === data.password) {
+            setError(false);
+            setHelperText("Login successfully");
+        } else {
+            setHelperText("Incorrect email or password");
+        }
+
+        console.log({ data });
+    };
+
+    const handleKeyPress = (e: any) => {
+        if (e.keyCode === 13 || e.which === 13) {
+            isButtonDisabled || handleSubmit();
+        }
+    };
 
     return (
         <form
@@ -39,6 +53,7 @@ export const LoginForm = () => {
             className="center"
             noValidate
             autoComplete="off">
+            {helperText}
             <Grid container spacing={1} alignItems="flex-end">
                 <Grid item>
                     <AccountCircle />
@@ -48,6 +63,10 @@ export const LoginForm = () => {
                         id="input-with-icon-grid"
                         className="input-field"
                         label="Email Address"
+                        type="email"
+                        error={error}
+                        onChange={(e) => setEmail(e.target.value)}
+                        onKeyPress={(e) => handleKeyPress}
                     />
                 </Grid>
             </Grid>
@@ -61,6 +80,10 @@ export const LoginForm = () => {
                         id="input-with-icon-grid"
                         className="input-field"
                         label="Password"
+                        type="password"
+                        error={error}
+                        onChange={(e) => setPassword(e.target.value)}
+                        onKeyPress={(e) => handleKeyPress}
                     />
                 </Grid>
             </Grid>
@@ -68,9 +91,8 @@ export const LoginForm = () => {
             <Button
                 className="btn"
                 variant="outlined"
-                onClick={() =>
-                    dispatch({ type: ActionType.USER_LOGIN, payload: "swe" })
-                }>
+                onClick={handleSubmit}
+                disabled={isButtonDisabled}>
                 Submit
             </Button>
         </form>
