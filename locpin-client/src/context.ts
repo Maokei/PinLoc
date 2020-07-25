@@ -1,17 +1,17 @@
-import { createContext } from 'react'
+import { createContext } from "react";
 
 export type InitialStateType = {
-	lang: string;
-	authenticated: boolean;
-}
+    lang: string;
+    loggedIn: boolean;
+    accessToken: string;
+};
 
 const initialState = {
-	lang: 'eng',
-	authenticated: false
+    lang: "eng",
+    loggedIn: false,
+    accessToken: "",
 };
 
 const AppContext = createContext<InitialStateType>(initialState);
 
-export {
-	AppContext
-};
+export { AppContext };
