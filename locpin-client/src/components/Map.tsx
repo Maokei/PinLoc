@@ -1,7 +1,8 @@
 import * as React from "react";
+import { useState } from "react";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import L from "leaflet";
+import L, { LatLngTuple } from "leaflet";
 import icon from "leaflet/dist/images/marker-icon.png";
 import iconShadow from "leaflet/dist/images/marker-shadow.png";
 import "./map.css";
@@ -13,18 +14,40 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const LeafletMap = (props: { center: any; zoom: any }) => {
+const LeafletMap = () => {
+	const defPositions: LatLngTuple[] = [
+		[59.33258, 18.0649],
+		[59.33258, 18.12345],
+	];
+
+	const [activeMarkers, setActiveMarkers] = useState(defPositions);
+
+	const addMarkers = (e: { latlng: any }) => {
+		activeMarkers.push([e.latlng.lat, e.latlng.lng]);
+		setActiveMarkers(activeMarkers);
+		console.log(activeMarkers);
+	};
+
 	return (
-		<Map center={props.center} zoom={props.zoom} style={{ height: "100vh" }}>
+		<Map center={[59.33258, 18.0649]} zoom={13} onclick={addMarkers}>
 			<TileLayer
 				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 				url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
 			/>
-			<Marker position={props.center}>
-				<Popup>
-					A pretty CSS3 popup. <br /> Easily customizable.
-				</Popup>
-			</Marker>
+
+			{activeMarkers.map((position: LatLngTuple, idx) => (
+				<Marker
+					key={`marker-${idx}`}
+					position={position}
+					onMouseOver={(e: { target: { openPopup: () => void } }) => {
+						e.target.openPopup();
+					}}
+					onMouseOut={(e: { target: { closePopup: () => void } }) => {
+						e.target.closePopup();
+					}}>
+					<Popup closeButton={false}>Popup</Popup>
+				</Marker>
+			))}
 		</Map>
 	);
 };

@@ -25,7 +25,7 @@ function App() {
 				}>
 				Reset
 			</Button>
-			<Map center={[59.33258, 18.0649]} zoom={12} />
+			<Map />
 		</div>
 	);
 }
