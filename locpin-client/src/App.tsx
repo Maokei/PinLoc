@@ -12,7 +12,7 @@ function App() {
     <Button variant="contained" color="primary" onClick={() => dispatch({type: ActionType.USER_LOGIN, payload: "swe"})}>
       Hello World { state.lang }
     </Button>
-    <Button variant="contained" color="primary" onClick={() => dispatch({type: ActionType.USER_LOGOUT, payload: "eng"})}>
+    <Button variant="contained" color="primary" onClick={() => dispatch({type: ActionType.USER_LOGOUT, payload: {text: "box"}})}>
       Reset
     </Button>
     <Map/>

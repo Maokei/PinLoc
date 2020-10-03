@@ -20,7 +20,7 @@ export const AppReducer = (state: InitialStateType, action: Action) => {
 		case ActionType.USER_LOGOUT:
 			return {
 				...state,
-				lang: "out"
+				lang: action.payload.text
 			}
 		default:
 		return state;
