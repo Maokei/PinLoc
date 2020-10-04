@@ -7,8 +7,13 @@
 
 # testing
 /coverage
+<<<<<<< HEAD
 /__snapshots__
 __snapshots__
+=======
+__snapshots__
+
+>>>>>>> master_map
 # production
 /build
 
