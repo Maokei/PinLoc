@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useState } from "react";
 import { Map, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L, { LatLngTuple } from "leaflet";
@@ -15,24 +14,19 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const LeafletMap = () => {
-	const defPositions: LatLngTuple[] = [
-		[59.33258, 18.0649],
-		[59.33258, 18.12345],
-	];
+	const defPositions: LatLngTuple[] = [[59.33258, 18.0649]];
 
-	const [activeMarkers, setActiveMarkers] = useState(defPositions);
+	const [activeMarkers, setActiveMarkers] = React.useState(defPositions);
 
 	const addMarkers = (e: { latlng: any }) => {
-		activeMarkers.push([e.latlng.lat, e.latlng.lng]);
-		setActiveMarkers(activeMarkers);
-		console.log(activeMarkers);
+		setActiveMarkers([...activeMarkers, e.latlng]);
 	};
 
 	return (
 		<Map center={[59.33258, 18.0649]} zoom={13} onclick={addMarkers}>
 			<TileLayer
 				attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-				url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png"
+				url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
 			/>
 
 			{activeMarkers.map((position: LatLngTuple, idx) => (
